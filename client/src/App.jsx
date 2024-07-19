@@ -1,30 +1,48 @@
-import { SignedIn, UserButton } from "@clerk/clerk-react";
-import { dark } from "@clerk/themes";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import "./App.css";
-import { Auth } from "./screens/auth";
-import { Dashboard } from "./screens/dashboard";
+import React, { useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 
+import AboutUs from "./screens/AboutUs";
+import ConfirmPayment from "./screens/ConfirmPayment";
+import Form from "./screens/Form";
+import Home from "./screens/Home";
+import HowBook from "./screens/HowBook";
+import LabExperiment from "./screens/LabExperiment";
+import Login from "./screens/Login";
+import Payment from "./screens/Payment";
+import Report from "./screens/Report";
 
-function App() {
+import Footer from "./components/Footer";
+import Headers from "./components/Headers";
 
-  return <Router>
-    <div className="app-container">
-      <div className="navbar">
-        <link to = "/"> Dashboard </link>
-        <SignedIn>
-            <UserButton appearance={{baseTheme: dark}}/>
-        </SignedIn>
-      </div>
-      <Routes>
-        <Route path = "/" element = {
-            <Dashboard/>
-          }
-        />
-        <Route path = "/auth" element = {<Auth/>} />
-      </Routes>
-    </div>
-  </Router>
+function LandingPage() {
+  const [redirectTo, setRedirectTo ] = useState(null);
+
+  if (redirectTo) return <Navigate to = {redirectTo} />;
+  return <div> Loading... </div>
 }
 
-export default App
+function App() {
+  //const [showPopup, setShowPopup] = useState(false);
+  //if(loading) return <div> Loading... </div>
+  return (
+    <section className="bg-Hero bg-cover font-[Poppins] md:bg-top bg-center p-0 m-0">
+    <Headers />
+      <Routes>
+        <Route path = "/" element = {<Home />} />
+        <Route path = "/home" element = {<Home />} />
+        <Route path = "/login" element = {<Login />} />
+        <Route path = "/form" element = {<Form />} />
+        <Route path = "/aboutUs" element = {<AboutUs />} />
+        <Route path = "/payment" element = {<Payment />} />
+        <Route path = "/confirmPayment" element = {<ConfirmPayment />} />
+        <Route path = "/labExperiment" element = {<LabExperiment />} />
+        <Route path = "/report" element = {<Report />} />
+        <Route path = "/howBook" element = {<HowBook />} />
+      </Routes>
+    <Footer  />
+    </section>
+  );
+}
+
+
+export default App;
